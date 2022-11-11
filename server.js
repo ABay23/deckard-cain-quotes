@@ -77,6 +77,20 @@ app.put('/quotes', (req, res) => {
     .catch((error) => console.error(error))
 })
 
+app.delete('/quotes', (req, res) => {
+  db.collection('quotes')
+    .deleteOne({
+      name: req.body.name,
+    })
+    .then((result) => {
+      if (result.deletedCount === 0) {
+        return res.json('No quote to delete')
+      }
+      res.json('Deleted quote')
+    })
+    .catch((error) => console.error(error))
+})
+
 app.listen(process.env.PORT || PORT, (req, res) => {
   console.log(`Stay awhile and listen to the  server ${PORT}! ...`)
 })
